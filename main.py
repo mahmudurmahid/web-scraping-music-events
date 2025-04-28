@@ -22,15 +22,18 @@ def extract(source):
 
 
 def send_email():
+    """ Send an email notification"""
     print("Email sent successfully!")
 
 
 def store(extracted):
+    """ Store the extracted data in a text file by appending"""
     with open("data.txt", "a") as file:
         file.write(extracted + "\n")
 
 
 def read(extracted):
+    """ Read the content of the text file"""
     with open("data.txt", "r") as file:
         return file.read()
 
