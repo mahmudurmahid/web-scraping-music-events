@@ -27,7 +27,7 @@ def extract(source):
     return value
 
 
-def send_email():
+def send_email(message):
     """ Send an email notification"""
     host = os.getenv("EMAIL_HOST")
     port = 465
