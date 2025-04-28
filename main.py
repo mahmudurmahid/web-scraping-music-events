@@ -2,6 +2,7 @@ import requests
 import selectorlib
 import smtplib, ssl
 import os
+import time
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -56,13 +57,14 @@ def read(extracted):
 
 
 if __name__ == "__main__":
-    scraped = scrape(URL)
-    extracted = extract(scraped)
-    print(extracted)
-    
-    content = read(extracted)
-
-    if extracted != "No upcoming tours":
-        if extracted not in content:
-            store(extracted)
-            send_email()
+    while True:
+        scraped = scrape(URL)
+        extracted = extract(scraped)
+        print(extracted)
+        
+        content = read(extracted)
+        if extracted != "No upcoming tours":
+            if extracted not in content:
+                store(extracted)
+                send_email(message= f"New tour available: {extracted}")
+        time.sleep(2)
