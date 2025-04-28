@@ -1,5 +1,11 @@
 import requests
 import selectorlib
+import smtplib, ssl
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 URL = "https://programmer100.pythonanywhere.com/tours/"
 HEADERS = {
@@ -23,7 +29,18 @@ def extract(source):
 
 def send_email():
     """ Send an email notification"""
-    print("Email sent successfully!")
+    host = os.getenv("EMAIL_HOST")
+    port = 465
+
+    username = os.getenv("EMAIL_USERNAME")
+    password = os.getenv("EMAIL_PASSWORD")
+
+    receiver = os.getenv("EMAIL_RECEIVER")
+    context = ssl.create_default_context()
+
+    with smtplib.SMTP_SSL(host, port, context=context) as server:
+        server.login(username, password)
+        server.sendmail(username, receiver, message)
 
 
 def store(extracted):
